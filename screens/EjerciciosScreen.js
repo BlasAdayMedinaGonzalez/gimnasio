@@ -22,6 +22,7 @@ const EjerciciosScreen = () => {
 }
 
 EjerciciosScreen.options = {
+
     tabBarIcon:({tintColor})=>(
         <Icon name="barbell" color={tintColor} size={25}/>
     )

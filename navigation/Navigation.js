@@ -12,6 +12,7 @@ import EjerciciosScreen from "../screens/EjerciciosScreen";
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+
     return (
         <Tab.Navigator initialRouteName="Entrenar">
             <Tab.Screen name="Perfil" component={PerfilScreen} options={PerfilScreen.options} />
