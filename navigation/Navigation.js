@@ -13,10 +13,10 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="EntrenarScreen" component={EntrenarScreen} />
-            <Tab.Screen name="PerfilScreen" component={PerfilScreen} />
-            <Tab.Screen name="EjerciciosScreen" component={EjerciciosScreen} />
+        <Tab.Navigator initialRouteName="Entrenar">
+            <Tab.Screen name="Perfil" component={PerfilScreen} options={PerfilScreen.options} />
+            <Tab.Screen name="Entrenar" component={EntrenarScreen} options={EntrenarScreen.options} />
+            <Tab.Screen name="Ejercicios" component={EjerciciosScreen} options={EjerciciosScreen.options} />
         </Tab.Navigator>
     );
 }

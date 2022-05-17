@@ -1,5 +1,6 @@
 import React from "react";
 import {View, Text, StyleSheet} from "react-native";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const PerfilScreen = () => {
@@ -17,6 +18,12 @@ const PerfilScreen = () => {
                 Perfil Screen
             </Text>
         </View>
+    )
+}
+
+PerfilScreen.options = {
+    tabBarIcon:({tintColor})=>(
+        <Icon name="person" color={tintColor} size={25}/>
     )
 }
 

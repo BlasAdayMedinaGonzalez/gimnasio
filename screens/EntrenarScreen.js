@@ -1,5 +1,6 @@
 import React from "react";
 import {View, Text, StyleSheet} from "react-native";
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const EntrenarScreen = () => {
@@ -18,6 +19,14 @@ const EntrenarScreen = () => {
             </Text>
         </View>
     )
+}
+
+
+EntrenarScreen.options = {
+    tabBarIcon:({tintColor})=>(
+        <Icon name="home" color={tintColor} size={25}/>
+    )
+        
 }
 
 export default EntrenarScreen;
