@@ -18,6 +18,7 @@ const EntrenarScreen = () => {
             >
                 Mis entrenamientos
             </Text>
+            {/*En cada icono aparecería el Modal*/}
             <View style={{
                 borderWidth: 1,
                 borderRadius: 10,

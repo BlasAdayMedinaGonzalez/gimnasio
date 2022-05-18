@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, {useSate} from "react";
 import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 
 
-//Ejemplo usando modal
-const EjerciciosScreen = () => {
+// Modal base para usar
+const ModalEjercicio = () => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
@@ -24,9 +23,9 @@ const EjerciciosScreen = () => {
             >
               <Text style={styles.textStyleClose}>X</Text>
             </Pressable>
-            <Text style={styles.modalText}>Leg Press</Text>
-            <Text style={styles.textDescription}>Descripción</Text>
-            <Text style={styles.text}>1.Realiza 3 series de Leg Press{"\n"}2.Repite el proceso</Text>
+            <Text style={styles.modalText}>Base de datos: Leg Press</Text>
+            <Text style={styles.textDescription}>Base de datos: Descripción</Text>
+            <Text style={styles.text}>Base de datos: 1.Realiza 3 series de Leg Press{"\n"}2.Repite el proceso</Text>
             <Pressable
               style={styles.buttonNext}
               onPress={() => setModalVisible(!modalVisible)}
@@ -43,13 +42,6 @@ const EjerciciosScreen = () => {
         <Text style={styles.textStyleModal}>Leg Press</Text>
         <Text style={styles.textCate}>Piernas</Text>
       </Pressable>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyleModal}>Hammer Curl</Text>
-        <Text style={styles.textCate}>Brazos</Text>
-      </Pressable>
     </View>
   );
 };
@@ -59,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -119,10 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-EjerciciosScreen.options = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon name="barbell" color={tintColor} size={25} />
-  ),
-};
-
-export default EjerciciosScreen;
+export default ModalEjercicio;
