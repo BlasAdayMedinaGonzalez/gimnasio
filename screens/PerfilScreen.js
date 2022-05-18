@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {View, Text, StyleSheet} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import Switch from 'expo-dark-mode-switch';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,78 +7,66 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const PerfilScreen = () => {
     const [value, setValue] = React.useState(true);
     return (
-        <View style={{margin: "5%"}}>
-            <Text
-                style={
-                    {
-                        fontSize:20,
-                        fontWeight: "bold",
-                        textAlign:"center"
-                    }
-                }
-            >           
-            </Text>
-
-            <View style={{flex: 1, alignItems: "center", flexDirection: "row", marginBottom: "20px"}}>
-                <Icon name="person-circle-sharp" size={40}/>
-                <Text
-                    style={
-                        {
-                            fontSize:20,
-                            fontWeight: "bold",
-                            
+        <View style={{ margin: "5%" }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Icon name="person-circle-sharp" size={40} />
+                    <Text
+                        style={
+                            {
+                                fontSize: 20,
+                                fontWeight: "bold",
+                            }
                         }
-                    }
-                >
-                    
-                    Juan Ochando
-                    
-                </Text>
-                <View style={{alignItems: "flex-end"}}>
-                    <Switch style={{marginLeft: "10px", marginBottom: "10px"}} value={value} onChange={value => setValue(value)} />
+                    >
+                        Juan Ochando
+                    </Text>
                 </View>
-                
+
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Switch value={value} onChange={value => setValue(value)} />
+                </View>
             </View>
-            
+
             <Text
                 style={
                     {
-                        fontSize:15,
-                        fontWeight: "bold"                      
+                        marginBottom: 10,
+                        fontSize: 15,
+                        fontWeight: "bold"
                     }
                 }
             >
                 Historial
             </Text>
             <View style={{
-                border: "1px solid",
-                borderRadius:"10px",
-                marginTop: "10px",
-                padding:"10px"
-                }}>
-                <Text 
+                borderWidth: 1,
+                borderRadius: 10,
+                padding: 10
+            }}>
+                <Text
                     style={
-                        {fontWeight: "bold",
+                        {
+                            fontWeight: "bold",
                         }
                     }>
                     Legs
-
                 </Text>
                 <Text>
-                    martes, 15 mar{"\n\n"}
+                    martes, 15 mar{"\n"}
                 </Text>
-                <Text 
+                <Text
                     style={
-                        {fontWeight: "bold"}
+                        { fontWeight: "bold" }
                     }>
                     Ejercicios
 
                 </Text>
                 <Text>
-                    4 x Squat (Barbell){"\n"}
-                    3 x Leg Press {"\n"}
-                    3 x Standing Calf Raises {"\n"}
-                    3 x Leg Extension
+                    {"\u00A0"} 4 x Squat (Barbell){"\n"}
+                    {"\u00A0"} 3 x Leg Press {"\n"}
+                    {"\u00A0"} 3 x Standing Calf Raises {"\n"}
+                    {"\u00A0"} 3 x Leg Extension
                 </Text>
             </View>
         </View>
@@ -86,13 +74,13 @@ const PerfilScreen = () => {
 }
 
 PerfilScreen.options = {
-    headerRight: ({tintColor}) => (
+    headerRight: ({ tintColor }) => (
         <>
-            <Icon name="log-out-outline" style={{marginRight: "10px"}} color={tintColor} size={25}/>
+            <Icon name="log-out-outline" style={{}} color={tintColor} size={25} />
         </>
-      ),
-    tabBarIcon:({tintColor})=>(
-        <Icon name="person" color={tintColor} size={25}/>
+    ),
+    tabBarIcon: ({ tintColor }) => (
+        <Icon name="person" color={tintColor} size={25} />
     )
 }
 
