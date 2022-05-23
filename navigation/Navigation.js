@@ -23,7 +23,7 @@ function MyTabs() {
     const navigation = useNavigation();
 
     return (
-        <Tab.Navigator initialRouteName="Perfil">
+        <Tab.Navigator initialRouteName="InicioScreen">
             <Tab.Screen
                 name="InicioScreen"
                 component={InicioScreen}
@@ -59,7 +59,7 @@ function MyTabs() {
                                 navigation.navigate('InicioScreen')
                             }
                         }>
-                            <Icon name="log-out-outline" style={{}}  size={25} />
+                            <Icon name="log-out-outline" size={25} />
                         </TouchableOpacity>
                     , tabBarIcon: () =>
                         <Icon name="person" size={25} />

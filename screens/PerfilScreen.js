@@ -77,7 +77,7 @@ PerfilScreen.options = {
                     useNavigation().navigate('InicioScreen')
                 }
             }>
-                <Icon name="log-out-outline" style={{}} color={tintColor} size={25} />
+                <Icon name="log-out-outline" color={tintColor} size={25} />
             </TouchableOpacity>
         </>
     ),
