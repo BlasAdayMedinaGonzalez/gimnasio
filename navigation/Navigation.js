@@ -71,7 +71,8 @@ function MyTabs() {
     );
 }
 
-export default function Navigation() {
+export default function Navigation({ejercicios}) {
+    console.log(ejercicios);
     return (
         <NavigationContainer>
             <MyTabs />
