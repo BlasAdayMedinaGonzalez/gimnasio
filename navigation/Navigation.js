@@ -23,7 +23,7 @@ function MyTabs() {
     const navigation = useNavigation();
 
     return (
-        <Tab.Navigator initialRouteName="InicioScreen">
+        <Tab.Navigator initialRouteName="Perfil">
             <Tab.Screen
                 name="InicioScreen"
                 component={InicioScreen}

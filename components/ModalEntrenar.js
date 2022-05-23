@@ -1,8 +1,18 @@
-import React, { useSate } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
 
 // Modal base para usar
-const ModalEjercicio = ({ modalVisible, setModalVisible }) => {
+const ModalEntrenar = ({ modalVisible, setModalVisible }) => {
+  
+  let texto = "Siguiente ejercicio";
+  // TO DO:
+  //  función
+  // if (ultimo) {
+  //     texto = "Finalizar Entrenamiento"
+  //     Consulta Post de los ejercicios a Historial
+  //     setModalVisible(!modalVisible)
+  // }
+
   return (
     <View>
       <Modal
@@ -26,15 +36,14 @@ const ModalEjercicio = ({ modalVisible, setModalVisible }) => {
             Base de datos: 1.Realiza 3 series de Leg Press{"\n"}2.Repite el
             proceso
           </Text>
+          <Pressable
+            style={styles.buttonNext}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.textStyleMain}>{texto}</Text>
+          </Pressable>
         </View>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyleModal}>Leg Press</Text>
-        <Text style={styles.textCate}>Piernas</Text>
-      </Pressable>
     </View>
   );
 };
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonNext: {
-    marginTop: 600,
+    marginTop: 580,
     backgroundColor: "#2196F3",
     padding: 5,
     borderRadius: 5,
@@ -98,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalEjercicio;
+export default ModalEntrenar;

@@ -12,60 +12,22 @@ const PerfilScreen = () => {
     const navigation = useNavigation();
     return (
         <View style={{ margin: "5%" }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={styles.content}>
+                <View style={styles.contentAlign}>
                     <Icon name="person-circle-sharp" size={40} />
-                    <Text
-                        style={
-                            {
-                                fontSize: 20,
-                                fontWeight: "bold",
-                            }
-                        }
-                    >
-                        Juan Ochando
-                    </Text>
+                    <Text style={styles.textPerfil}>Juan Ochando</Text>
                 </View>
-
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={styles.contentAlign}>
                     <Switch value={value} onChange={value => setValue(value)} />
                 </View>
             </View>
-
-            <Text
-                style={
-                    {
-                        marginBottom: 10,
-                        fontSize: 15,
-                        fontWeight: "bold"
-                    }
-                }
-            >
-                Historial
-            </Text>
-            <View style={{
-                borderWidth: 1,
-                borderRadius: 10,
-                padding: 10
-            }}>
-                <Text
-                    style={
-                        {
-                            fontWeight: "bold",
-                        }
-                    }>
-                    Legs
-                </Text>
+            <Text style={styles.textTitle}>Historial</Text>
+            <View style={styles.case}>
+                <Text style={styles.text}>Legs</Text>
                 <Text>
                     martes, 15 mar{"\n"}
                 </Text>
-                <Text
-                    style={
-                        { fontWeight: "bold" }
-                    }>
-                    Ejercicios
-
-                </Text>
+                <Text style={styles.text}> Ejercicios </Text>
                 <Text>
                     {"\u00A0"} 4 x Squat (Barbell){"\n"}
                     {"\u00A0"} 3 x Leg Press {"\n"}
@@ -76,6 +38,35 @@ const PerfilScreen = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    content: {
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        marginBottom: 20
+    },
+    contentAlign: {
+        flexDirection: "row", 
+        alignItems: "center" 
+    },
+    textPerfil : {
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+    textTitle: {
+        marginBottom: 10,
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+    case: {
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10
+    },
+    text: {
+        fontWeight: "bold"
+    }
+});
 
 PerfilScreen.options = {
     headerRight: ({ tintColor }) => (
