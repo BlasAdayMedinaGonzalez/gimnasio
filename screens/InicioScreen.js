@@ -1,19 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import {useNavigation} from '@react-navigation/native';
 
 const InicioScreen = () => {
+  const navigation = useNavigation();
+
     return (
         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-end'}}>
             <View style={styles.centered}>
             <Pressable
                 style={styles.button1}
-                onPress={() => "pressed"}
+                onPress={() => navigation.navigate('Login')}
             >
                 <Text style={styles.buttonText1}>Login</Text>
             </Pressable>
             <Pressable
                 style={styles.button2}
-                onPress={() => "pressed"}
+                onPress={() => navigation.navigate('Registro')}
             >
                 <Text style={styles.buttonText2}>Register</Text>
             </Pressable>

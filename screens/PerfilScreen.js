@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Switch from 'expo-dark-mode-switch';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
+import { TouchableOpacity } from "expo-dark-mode-switch/build/Elements";
 
 
 const PerfilScreen = () => {
     const [value, setValue] = React.useState(true);
+    
+    const navigation = useNavigation();
     return (
         <View style={{ margin: "5%" }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
@@ -75,8 +79,15 @@ const PerfilScreen = () => {
 
 PerfilScreen.options = {
     headerRight: ({ tintColor }) => (
+        
         <>
-            <Icon name="log-out-outline" style={{}} color={tintColor} size={25} />
+            <TouchableOpacity onPress={
+                () => {
+                    useNavigation().navigate('InicioScreen')
+                }
+            }>
+                <Icon name="log-out-outline" style={{}} color={tintColor} size={25} />
+            </TouchableOpacity>
         </>
     ),
     tabBarIcon: ({ tintColor }) => (

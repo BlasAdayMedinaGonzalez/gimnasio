@@ -1,83 +1,66 @@
-import React from "react";
-import { View, Text, StyleSheet, Pressable} from "react-native";
+import { View, Text, Image, Pressable, TextInput, StyleSheet } from 'react-native'
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const LoginScreen = () => {
+import Back from '../assets/back.png'
+
+export default function LoginScreen() {
+  const navigation = useNavigation();
   return (
-    <View style={styles.centered}>
-      <View
-        style={{
-          flexDirection: "row",
-          marginBottom: 20,
-        }}
-      >
-        <View>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-            }}
-          >
-            Login
-          </Text>
-        </View>
+    <View style={styles.root}>
+      <Pressable style={{alignSelf: 'flex-start'}} onPress={() => navigation.navigate('InicioScreen')}>
+        <Image source={Back} style={{width: 25, height: 25}}/>
+      </Pressable>
+      
+      <View style={styles.input}>
+        <TextInput
+          placeholder='Usuario'
+          placeholderTextColor={'black'}
+          rules={{ required: 'Usuario incorrecto.' }}
+        />
       </View>
-      <View style={styles.viewText}>
-        <View>
-          <Text
-            style={{
-              fontSize: 15,
-              marginLeft: 5,
-              marginBottom: 5,
-            }}
-          >
-            username
-          </Text>
-        </View>
+      <View style={styles.input}>
+        <TextInput
+        secureTextEntry
+          placeholder='Contraseña'
+          placeholderTextColor={'black'}
+        />
       </View>
-      <View style={styles.viewText}>
-        <View>
-          <Text
-            style={{
-              fontSize: 15,
-              marginLeft: 5,
-              marginBottom: 5,
-            }}
-          >
-            .................
-          </Text>
-        </View>
-      </View>
-      <Pressable
-        style={styles.button}
-        onPress={() => "pressed"}
-      >
-        <Text style={styles.buttonText}>Login</Text>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Entrenar')}>
+        <Text style={styles.text}>Acceder</Text>
       </Pressable>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
-  centered: {
-    padding: 22,
-    marginTop: 22,
+  root: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
   },
-  viewText: {
-    marginBottom: 20,
+  input: {
+    width: '100%',
+    height: 30,
+    borderColor: 'black',
     borderWidth: 2,
     borderRadius: 5,
-    padding: 2,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    justifyContent: 'center',
+    color: 'black'
   },
   button: {
-    padding: 10,
-    backgroundColor: "#2196F3",
-    borderRadius: 5,
-  },
-  buttonText: {
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center"
-  }
-});
+    width: '100%',
+    padding: 15,
+    marginVertical: 5,
+    alignItems: 'center',
+    borderRadius: 5, 
 
-export default LoginScreen;
+    backgroundColor: '#35AAF2'
+},
+  text: {
+    fontWeight: 'bold',
+    color: 'white',
+  }
+})
