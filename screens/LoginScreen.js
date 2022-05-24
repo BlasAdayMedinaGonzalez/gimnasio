@@ -32,13 +32,7 @@ export default function LoginScreen() {
                     navigation.navigate('Entrenar');
                   }
                 })
-
               }
-              console.log('====================================');
-              console.log('Contraseña validada:' + passwordValid);
-              console.log('====================================');
-
-              
             })
             .catch(err => { console.log('Contraseña incorrecta') })
 
