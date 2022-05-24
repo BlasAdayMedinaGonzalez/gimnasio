@@ -34,24 +34,55 @@ const stopServer = () => {
 //   DELETE       /api/employee/:id    Delete employee where employee_id=??
 
 // Rutas de nuestra API.
-app.get('/api/v1', (req, res) => {
-    return res.send({
-        error: false,
-        message: "Welcome to RESTFul CRUD API in Node.js with Express",
-        written_by: "Acceso a Datos",
-        published_on: "http://localhost:8000/api/v1/"
-    });
-})
+// app.get('/api/v1', (req, res) => {
+//     return res.send({
+//         error: false,
+//         message: "Welcome to RESTFul CRUD API in Node.js with Express",
+//         written_by: "Acceso a Datos",
+//         published_on: "http://localhost:8000/api/v1/"
+//     });
+// })
 
-app.get('/api/v1/ejercicios', async (req, res) => {
+// app.get('/api/v1/users', async (req, res) => {
+//     try {
+//         const set = `SELECT * FROM Usuarios`;
+//         const results = await query(set);
+//         let message = "";
+//         if (results === undefined || results.length === 0) {
+//             message = "Users table is empty";
+//         } else {
+//             message = "Successfully retrieved all users";
+//         }
+
+//         res.send({
+//             error: false,
+//             data: results,
+//             message: message
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         res.sendStatus(500);
+//     }
+// })
+
+app.get('/api/v1/users/:username', async (req, res) => {
+    const {username} = req.params;
+    if (!username) {
+        return res.status(400).send({
+            error: true,
+            message: "username is required"
+        });
+    }
+
     try {
-        const set = `SELECT * FROM ejercicios`;
-        const results = await query(set);
+        const set = `SELECT username FROM usuarios WHERE username = ?`;
+        const results = await query(set, [username]);
         let message = "";
+
         if (results === undefined || results.length === 0) {
-            message = "employeees table is empty";
+            message = "User is not found";
         } else {
-            message = "Successfully retrieved all employees";
+            message = "Sucessfully retrieved user data";
         }
 
         res.send({
@@ -59,30 +90,31 @@ app.get('/api/v1/ejercicios', async (req, res) => {
             data: results,
             message: message
         })
+
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
 })
 
-app.get('/api/v1/employee/:id', async (req, res) => {
-    const {id} = req.params;
-    if (!id) {
+app.get('/api/v1/password/:password', async (req, res) => {
+    const {password} = req.params;
+    if (!password) {
         return res.status(400).send({
             error: true,
-            message: "employee id is required"
+            message: "password is required"
         });
     }
 
     try {
-        const set = `SELECT * FROM employees WHERE employee_id = ?`;
-        const results = await query(set, [id])
+        const set = `SELECT * FROM usuarios WHERE passwords = ?`;
+        const results = await query(set, [password]);
         let message = "";
 
         if (results === undefined || results.length === 0) {
-            message = "employee is not found";
+            message = "Password is not found";
         } else {
-            message = "Sucessfully retrieved employee data";
+            message = "Sucessfully retrieved password data";
         }
 
         res.send({
