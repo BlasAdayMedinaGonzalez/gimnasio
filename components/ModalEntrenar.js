@@ -1,50 +1,81 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Pressable, Modal, TouchableHighlight, FlatList } from "react-native";
 
-// Modal base para usar
-const ModalEntrenar = ({ modalVisible, setModalVisible }) => {
+
+
+const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, setEntrenamientoModal, count, setCount}) => {
+  const [descripciones, setDescripciones] = useState("");
+  const {entrenamiento1, entrenamiento2, entrenamiento3} = entrenamientoModal;
+  const entrenamientos = [entrenamiento1, entrenamiento2, entrenamiento3];
+  const [titulos, setTitulos] = useState("");
+  const [textoButton, setTextoButton] = useState("Iniciar entrenamiento")
+
+  const next = () => {
+    setCount(0);
+    setTitulos(entrenamientos[count]);
+    if (count < entrenamientos.length) {
+      setTextoButton("Siguiente ejercicio");
+      setCount(count+1)
+    } 
+    if (count >= entrenamientos.length) {
+      console.log(entrenamientos[count]);
+      setTextoButton("Finalizar entrenamiento");
+      setModalVisible(!modalVisible);
+      // consulta post
+    }
+    if (count > entrenamientos.length) {
+      console.log(entrenamientos[count]);
+      setTextoButton("Finalizar entrenamiento");
+      setModalVisible(!modalVisible);
+      // consulta post
+    }
+    
+    console.log('====================================');
+    console.log(entrenamientos.length-1);
+    console.log('====================================');
+    // if (count == entrenamientos.length) {
+      
+    // }
+    console.log(count);
+    
+  }
   
-  let texto = "Siguiente ejercicio";
-  // TO DO:
-  //  función
-  // if (ultimo) {
-  //     texto = "Finalizar Entrenamiento"
-  //     Consulta Post de los ejercicios a Historial
-  //     setModalVisible(!modalVisible)
-  // }
-
   return (
     <View>
-      <Modal
+    <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
+          setTitulos(entrenamientoModal.entrenamiento1)
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.modalView}>
           <Pressable
             style={styles.buttonClose}
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => {setTitulos(entrenamientoModal.entrenamiento1); setModalVisible(!modalVisible)}}
           >
             <Text style={styles.textStyleClose}>X</Text>
           </Pressable>
-          <Text style={styles.modalText}>Base de datos: Leg Press</Text>
-          <Text style={styles.textDescription}>Descripción</Text>
+          <Text style={styles.modalText}>{titulos}</Text>
+          {/* <Text style={styles.textDescription}>Inicio</Text> */}
           <Text style={styles.text}>
-            Base de datos: 1.Realiza 3 series de Leg Press{"\n"}2.Repite el
-            proceso
+          {descripciones}
           </Text>
-          <Pressable
+          <TouchableHighlight
             style={styles.buttonNext}
-            onPress={() => setModalVisible(!modalVisible)}
+            onPress={() => next()}
           >
-            <Text style={styles.textStyleMain}>{texto}</Text>
-          </Pressable>
+            <Text style={styles.textStyleMain}>{textoButton}</Text>
+          </TouchableHighlight>
         </View>
       </Modal>
-    </View>
+      <FlatList data={entrenamientoModal} renderItem={(itemData) => {
+        
+      }} />
+
+      </View>
   );
 };
 

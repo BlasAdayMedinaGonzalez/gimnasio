@@ -7,7 +7,7 @@ app.disable(`x-powered-by`);
 
 
 app.use(express.json());
-res.header( "Access-Control-Allow-Origin" );
+// res.header( "Access-Control-Allow-Origin" );
 
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
@@ -110,6 +110,52 @@ app.post("/api/v1/user", async (req, res) => {
             error: false,
             data: {insertId: results.insertId},
             message: "User Sucessfully added"
+        })
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+
+
+app.get('/api/v1/ejercicios', async (req, res) => {
+    try {
+        const set = `SELECT * FROM ejercicios`;
+        const results = await query(set);
+        let message = "";
+        if (results === undefined || results.length === 0) {
+            message = "ejercicios table is empty";
+        } else {
+            message = "Successfully retrieved all ejercicios";
+        }
+
+        res.send({
+            error: false,
+            data: results,
+            message: message
+        })
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
+
+app.get('/api/v1/entrenamientos', async (req, res) => {
+    console.log(res);
+    try {
+        const set = `SELECT * FROM entrenamientos`;
+        const results = await query(set);
+        let message = "";
+        if (results === undefined || results.length === 0) {
+            message = "entrenamientos table is empty";
+        } else {
+            message = "Successfully retrieved all entrenamientos";
+        }
+
+        res.send({
+            error: false,
+            data: results,
+            message: message
         })
     } catch (error) {
         console.log(error);
