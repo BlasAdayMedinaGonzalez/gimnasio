@@ -1,41 +1,29 @@
-import React, { useSate } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
 
 // Modal base para usar
-const ModalEjercicio = ({ modalVisible, setModalVisible }) => {
+const ModalEjercicio = ({ modalVisible, setModalVisible, ejercicioModal }) => {
   return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalView}>
-          <Pressable
-            style={styles.buttonClose}
-            onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text style={styles.textStyleClose}>X</Text>
-          </Pressable>
-          <Text style={styles.modalText}>Base de datos: Leg Press</Text>
-          <Text style={styles.textDescription}>Descripción</Text>
-          <Text style={styles.text}>
-            Base de datos: 1.Realiza 3 series de Leg Press{"\n"}2.Repite el
-            proceso
-          </Text>
-        </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyleModal}>Leg Press</Text>
-        <Text style={styles.textCate}>Piernas</Text>
-      </Pressable>
-    </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.modalView}>
+        <Pressable
+          style={styles.buttonClose}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          <Text style={styles.textStyleClose}>X</Text>
+        </Pressable>
+        <Text style={styles.modalText} >{ejercicioModal.nombre}</Text>
+        <Text style={styles.textDescription} >Descripción</Text>
+        <Text style={styles.text} >{ejercicioModal.descripción}</Text>
+      </View>
+    </Modal>
   );
 };
 

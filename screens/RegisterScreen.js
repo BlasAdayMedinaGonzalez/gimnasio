@@ -6,12 +6,11 @@ import { useForm } from 'react-hook-form';
 import Back from '../assets/back.png'
 import axios from 'axios';
 
-export default function LoginScreen() {
+export default function LoginScreen({username, setUsername}) {
   const navigation = useNavigation();
   const { control, handleSubmit, watch } = useForm();
   var cors = require('cors');
-
-  const [username, setUsername] = useState('');
+  
   const [passwords, setPasswords] = useState('');
   const [email, setEmail] = useState('');
 

@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import { TouchableOpacity } from "expo-dark-mode-switch/build/Elements";
 
 
-const PerfilScreen = () => {
+const PerfilScreen = ({username}) => {
     const [value, setValue] = React.useState(true);
     
     const navigation = useNavigation();
@@ -15,10 +15,10 @@ const PerfilScreen = () => {
             <View style={styles.content}>
                 <View style={styles.contentAlign}>
                     <Icon name="person-circle-sharp" size={40} />
-                    <Text style={styles.textPerfil}>Juan Ochando</Text>
+                    <Text style={styles.textPerfil}>{username}</Text>
                 </View>
                 <View style={styles.contentAlign}>
-                    <Switch value={value} onChange={value => setValue(value)} />
+                    
                 </View>
             </View>
             <Text style={styles.textTitle}>Historial</Text>

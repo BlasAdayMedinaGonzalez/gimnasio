@@ -1,17 +1,14 @@
-import { View, Text, Image, Pressable, TextInput, StyleSheet } from 'react-native'
+import { View, Text, Modal, Image, Pressable, TextInput, StyleSheet } from 'react-native'
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import Back from '../assets/back.png'
 
-export default function LoginScreen() {
+export default function LoginScreen({ username, password, setUsername, setPassword }) {
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [modalValidateVisible, setModalValidateVisible] = useState(false);
 
-  const [usernameValid, setUsernameValid] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
 
   const validateUser = (user, pass) => {
     const url = 'http://192.168.1.130:8000/api/v1/users/' + user;
@@ -19,27 +16,27 @@ export default function LoginScreen() {
       .then(res => res.json())
       .then(res => {
         if (res.data.length > 0) {
-          setUsernameValid(true);
-
           const url2 = 'http://192.168.1.130:8000/api/v1/password/' + pass;
           fetch(url2)
             .then(res => res.json())
             .then(res => {
               if (res.data.length > 0) {
                 res.data.forEach(obj => {
-                  if (obj.Username === username) {
-                    setPasswordValid(true);
+                  if (obj.nombre === username) {
+
                     navigation.navigate('Entrenar');
                   }
                 })
               }
             })
-            .catch(err => { console.log('Contraseña incorrecta') })
+            .catch(err => { console.log('Contraseña incorrecta');  })
 
 
+        } else {
+          setModalValidateVisible()
         }
       })
-      .catch(err => { console.log('El usuario introducido no existe.') })
+      .catch(err => { console.log(err) })
 
 
 
@@ -71,6 +68,27 @@ export default function LoginScreen() {
       <Pressable style={styles.button} onPress={() => validateUser(username, password)}>
         <Text style={styles.text}>Acceder</Text>
       </Pressable>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalValidateVisible}
+        onRequestClose={() => {
+          setModalValidateVisible(!modalValidateVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.title}>Usuario o contraseña incorrecta</Text>
+            <Pressable
+              style={[styles.buttonModal, styles.buttonClose]}
+              onPress={() => setModalValidateVisible(!modalValidateVisible)}
+            >
+              <Text style={styles.textStyle}>OK</Text>
+            </Pressable>
+
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -104,5 +122,51 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: 'white',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  buttonModal: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  title: { 
+    marginBottom: 20,
+    fontSize: 17,
+    color: 'red'
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
   }
 })
