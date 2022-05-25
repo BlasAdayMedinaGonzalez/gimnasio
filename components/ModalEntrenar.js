@@ -1,20 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable, Modal, TouchableHighlight, FlatList } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable, Modal, TouchableHighlight, ScrollView } from "react-native";
+import axios from 'axios';
 
-
-
-const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, itemData, setEntrenamientoModal, countt, setCountt }) => {
-  const [descripciones, setDescripciones] = useState("");
-  const { ejercicio1, ejercicio2, ejercicio3 } = entrenamientoModal;
-  const ejercicios = [ejercicio1, ejercicio2, ejercicio3];
+const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal }) => {
+  const [descripcion, setDescripcion] = useState("");
+  const { ejercicio1, ejercicio2, ejercicio3, ejercicio4, ejercicio5, descripcion1, descripcion2, descripcion3, descripcion4, descripcion5 } = entrenamientoModal;
+  const ejercicios = [ejercicio1, ejercicio2, ejercicio3, ejercicio4, ejercicio5];
+  const descripciones = [descripcion1, descripcion2, descripcion3, descripcion4, descripcion5];
   const [titulos, setTitulos] = useState('ENTRENAMIENTO');
   const [textoButton, setTextoButton] = useState("Iniciar entrenamiento");
   const [count, setCount] = useState(0);
-  
+
+  var date = new Date().getDate();
+  var month = new Date().getMonth() + 1;
+  var year = new Date().getFullYear();
+
+  const fecha = date + '/' + month + '/' + year;
+
+  const historialEntrenamiento = {
+    "fecha": fecha,
+    "usuario": '614',
+    "entrenamiento": entrenamientoModal.entrenamiento_id
+  }
 
   const next = () => {
-    
+    console.log('====================================');
+    console.log(entrenamientoModal);
+    console.log('====================================');
     setTitulos(ejercicios[count]);
+    setDescripcion(descripciones[count]);
     if (count < ejercicios.length) {
       setTextoButton("Siguiente ejercicio");
       setCount(count + 1)
@@ -27,7 +41,11 @@ const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, item
       setModalVisible(!modalVisible);
       setCount(0)
       setTitulos('ENTRENAMIENTO')
-      // consulta post
+      setDescripcion('');
+
+      axios.post('http://192.168.1.130:8000/api/v1/entrenamiento', historialEntrenamiento)
+        .then(console.log('Entrenamiento finalizado'))
+        .catch(err => console.error(err))
     }
   }
 
@@ -35,6 +53,7 @@ const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, item
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
+        keyExtractor={Math.random() * 100}
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -49,9 +68,20 @@ const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, item
             <Text style={styles.textStyleClose}>X</Text>
           </Pressable>
           <Text style={styles.modalText}>{titulos}</Text>
+          
+          <ScrollView  contentContainerStyle={{ flexGrow: 1, height: '100%' }} showsVerticalScrollIndicator={false}>
+            
+          
           <Text style={styles.text}>
-            {descripciones}
-          </Text>
+          {descripcion}
+        </Text>
+          
+        
+
+      </ScrollView>
+          
+          
+
           <TouchableHighlight
             style={styles.buttonNext}
             onPress={() => next()}
@@ -60,10 +90,6 @@ const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, item
           </TouchableHighlight>
         </View>
       </Modal>
-      <FlatList data={entrenamientoModal} renderItem={(itemData) => {
-
-      }} />
-
     </View>
   );
 };
@@ -132,6 +158,9 @@ const styles = StyleSheet.create({
   textCate: {
     textAlign: "center",
   },
+  text: {
+    backgroundColor: "grey"
+  }
 });
 
 export default ModalEntrenar;

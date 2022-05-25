@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState} from "react";
 import {
   View,
   Text,
@@ -12,20 +12,10 @@ import ModalEntrenar from "../components/ModalEntrenar";
 
 const EntrenarScreen = ({ entrenamientos }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [entrenamientoModal, setEntrenamientoModal] = useState([]);
+  const [entrenamientoModal, setEntrenamientoModal] = useState(entrenamientos.data);
   const [count, setCount] = useState(0);
 
   const [entrenamientosList, setEntrenamientosList] = useState();
-
-  useEffect(() => {
-    // console.log('====================================');
-    // console.log(entrenamientos.data);
-    // console.log('====================================');
-    // setEntrenamientosList(entrenamientos.data);
-    // console.log('====================================');
-    // console.log(entrenamientosList);
-    // console.log('====================================');
-  }, []);
 
   return (
     <View style={{ margin: "5%" }}>
@@ -34,22 +24,17 @@ const EntrenarScreen = ({ entrenamientos }) => {
       <FlatList
         data={entrenamientos.data}
         renderItem={(itemData) => {
-          const index = itemData.index;
           return (
             <View itemData={itemData.item} style={styles.sectionCase}>
               <View style={styles.sectionItems}>
                 <ModalEntrenar
-                  count={count}
-                  setCount={setCount}
                   modalVisible={modalVisible}
                   setModalVisible={setModalVisible}
-                  entrenamientoModal={itemData.item} // HERE
-                  setEntrenamientoModal={setEntrenamientoModal}
-                  itemData={itemData.index}
+                  entrenamientoModal={entrenamientoModal}
                 />
                 <Text style={styles.sectionText}>{itemData.item.nombre}</Text>
                 <TouchableHighlight
-                  style={{ marginLeft: "70%" }}
+                  style={{ marginLeft: "60%" }}
                   onPress={() => {
                     setModalVisible(true);
                     setEntrenamientoModal(itemData.item);
@@ -69,6 +54,12 @@ const EntrenarScreen = ({ entrenamientos }) => {
                 {"\n"}
                 {"\u00A0"}
                 {itemData.item.ejercicio3}
+                {"\n"}
+                {"\u00A0"}
+                {itemData.item.ejercicio4}
+                {"\n"}
+                {"\u00A0"}
+                {itemData.item.ejercicio5}
                 {"\n"}
               </Text>
             </View>

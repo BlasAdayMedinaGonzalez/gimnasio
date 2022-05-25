@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
 
-// Modal base para usar
 const ModalEjercicio = ({ modalVisible, setModalVisible, ejercicioModal }) => {
   return (
     <Modal
       animationType="slide"
+      keyExtractor={Math.random*100}
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
@@ -21,7 +21,7 @@ const ModalEjercicio = ({ modalVisible, setModalVisible, ejercicioModal }) => {
         </Pressable>
         <Text style={styles.modalText} >{ejercicioModal.nombre}</Text>
         <Text style={styles.textDescription} >Descripción</Text>
-        <Text style={styles.text} >{ejercicioModal.descripción}</Text>
+        <Text style={styles.text} >{ejercicioModal.descripcion}</Text>
       </View>
     </Modal>
   );

@@ -9,8 +9,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import fgetAllexercises from "../services/services";
 import fgetAllentrenamientos from "../services/entrenamientos";
 
-//screens
-
 import EntrenarScreen from "../screens/EntrenarScreen";
 import PerfilScreen from "../screens/PerfilScreen";
 import EjerciciosScreen from "../screens/EjerciciosScreen";
@@ -24,6 +22,7 @@ function MyTabs() {
   const navigation = useNavigation();
   const [ejercicios, setEjercicios] = useState([]);
   const [entrenamientos, setEntrenamientos] = useState([]);
+  const [historial, setHistorial] = useState([]);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -37,6 +36,10 @@ function MyTabs() {
       .then(res => res.json())
       .then(res => setEntrenamientos(res))
       .catch((err) => console.log(err))
+    fetch("http://192.168.1.130:8000/api/v1/historial")
+      .then(res => res.json())
+      .then(res => setHistorial(res))
+      .catch((err) => console.log(err))
   }, []);
 
   return (
@@ -45,7 +48,7 @@ function MyTabs() {
         name="InicioScreen"
         component={InicioScreen}
         options={{
-          tabBarStyle: { display: "none"},
+          tabBarStyle: { display: "none" },
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
@@ -53,7 +56,7 @@ function MyTabs() {
       <Tab.Screen
         name="Login"
         options={{
-          tabBarStyle: { display: "none"},
+          tabBarStyle: { display: "none" },
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
@@ -66,11 +69,11 @@ function MyTabs() {
       <Tab.Screen
         name="Registro"
         options={{
-          tabBarStyle: { display: "none"},
+          tabBarStyle: { display: "none" },
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
-        children={() => <RegisterScreen username={username} setUsername={setUsername}/>}
+        children={() => <RegisterScreen username={username} setUsername={setUsername} />}
       />
       <Tab.Screen
         name="Perfil"
@@ -86,18 +89,16 @@ function MyTabs() {
           ),
           tabBarIcon: () => <Icon name="person" size={25} />,
         }}
-        children={() => <PerfilScreen username={username} />}
-        
+        children={() => <PerfilScreen username={username} historial={historial} />}
+
       />
       <Tab.Screen
         name="Entrenar"
-        // component={EntrenarScreen}
         options={EntrenarScreen.options}
         children={() => <EntrenarScreen entrenamientos={entrenamientos} />}
       />
       <Tab.Screen
         name="Ejercicios"
-        // component={EjerciciosScreen}
         options={EjerciciosScreen.options}
         children={() => <EjerciciosScreen ejercicios={ejercicios} />}
       />
