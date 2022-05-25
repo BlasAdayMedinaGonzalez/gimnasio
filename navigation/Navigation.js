@@ -25,46 +25,55 @@ function MyTabs() {
   const [ejercicios, setEjercicios] = useState([]);
   const [entrenamientos, setEntrenamientos] = useState([]);
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   useEffect(() => {
-    fgetAllexercises().then((res) => {
-      console.log(res.data);
-      setEjercicios(res.data);
-    }).catch(error => console.log(error));
-    fgetAllentrenamientos().then((res) => {
-      console.log(res.data);
-      setEntrenamientos(res.data);
-    }).catch(error => console.log(error));
+    fetch("http://192.168.1.130:8000/api/v1/ejercicios")
+      .then(res => res.json())
+      .then(res => setEjercicios(res))
+      .catch((err) => console.log(err))
+    fetch("http://192.168.1.130:8000/api/v1/entrenamientos")
+      .then(res => res.json())
+      .then(res => setEntrenamientos(res))
+      .catch((err) => console.log(err))
   }, []);
 
   return (
-    <Tab.Navigator initialRouteName="Entrenar">
+    <Tab.Navigator initialRouteName="InicioScreen">
       <Tab.Screen
         name="InicioScreen"
         component={InicioScreen}
         options={{
+          tabBarStyle: { display: "none"},
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
       />
       <Tab.Screen
         name="Login"
-        component={LoginScreen}
         options={{
+          tabBarStyle: { display: "none"},
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
+        children={() => <LoginScreen username={username}
+          password={password}
+          setUsername={setUsername}
+          setPassword={setPassword} />}
+
       />
       <Tab.Screen
         name="Registro"
-        component={RegisterScreen}
         options={{
+          tabBarStyle: { display: "none"},
           tabBarButton: () => null,
           tabBarVisible: false,
         }}
+        children={() => <RegisterScreen username={username} setUsername={setUsername}/>}
       />
       <Tab.Screen
         name="Perfil"
-        component={PerfilScreen}
         options={{
           headerRight: () => (
             <TouchableOpacity
@@ -77,25 +86,27 @@ function MyTabs() {
           ),
           tabBarIcon: () => <Icon name="person" size={25} />,
         }}
+        children={() => <PerfilScreen username={username} />}
+        
       />
       <Tab.Screen
         name="Entrenar"
         // component={EntrenarScreen}
         options={EntrenarScreen.options}
-        children = {() => <EntrenarScreen entrenamientos={entrenamientos} />}
+        children={() => <EntrenarScreen entrenamientos={entrenamientos} />}
       />
       <Tab.Screen
         name="Ejercicios"
         // component={EjerciciosScreen}
         options={EjerciciosScreen.options}
-        children = {() => <EjerciciosScreen ejercicios={ejercicios} />}
+        children={() => <EjerciciosScreen ejercicios={ejercicios} />}
       />
     </Tab.Navigator>
   );
 }
 
 export default function Navigation() {
-  
+
   return (
     <NavigationContainer>
       <MyTabs />

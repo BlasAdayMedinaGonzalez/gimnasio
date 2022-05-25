@@ -25,9 +25,9 @@ const stopServer = () => {
     server.close();
 };
 
-app.get('/api/v1/users/:username', async (req, res) => {
-    const {username} = req.params;
-    if (!username) {
+app.get('/api/v1/users/:nombre', async (req, res) => {
+    const {nombre} = req.params;
+    if (!nombre) {
         return res.status(400).send({
             error: true,
             message: "username is required"
@@ -35,8 +35,8 @@ app.get('/api/v1/users/:username', async (req, res) => {
     }
 
     try {
-        const set = `SELECT username FROM usuarios WHERE username = ?`;
-        const results = await query(set, [username]);
+        const set = `SELECT nombre FROM usuarios WHERE nombre = ?`;
+        const results = await query(set, [nombre]);
         let message = "";
 
         if (results === undefined || results.length === 0) {
@@ -67,7 +67,7 @@ app.get('/api/v1/password/:password', async (req, res) => {
     }
 
     try {
-        const set = `SELECT * FROM usuarios WHERE passwords = ?`;
+        const set = `SELECT * FROM usuarios WHERE password = ?`;
         const results = await query(set, [password]);
         let message = "";
 
@@ -103,7 +103,7 @@ app.post("/api/v1/user", async (req, res) => {
     }
 
     try {
-        const sql = "INSERT INTO Usuarios (username, email, passwords) VALUES (?,?,?)";
+        const sql = "INSERT INTO Usuarios (nombre, correo, password) VALUES (?,?,?)";
         const results = await query(sql, [username, email, passwords])
 
         res.send({
@@ -141,15 +141,20 @@ app.get('/api/v1/ejercicios', async (req, res) => {
 })
 
 app.get('/api/v1/entrenamientos', async (req, res) => {
-    console.log(res);
     try {
-        const set = `SELECT * FROM entrenamientos`;
+        const set = `Select entrenamientos.entrenamiento_id, entrenamientos.nombre, e1.nombre as ejercicio1, e2.nombre as ejercicio2, e3.nombre as ejercicio3, e4.nombre as ejercicio4, e5.nombre as ejercicio5 from entrenamientos 
+        join ejercicios e1 on e1.ejercicio_id = entrenamientos.ejercicio1 
+        join ejercicios e2 on e2.ejercicio_id = entrenamientos.ejercicio2
+        join ejercicios e3 on e3.ejercicio_id = entrenamientos.ejercicio3 
+        join ejercicios e4 on e4.ejercicio_id = entrenamientos.ejercicio4
+        join ejercicios e5 on e5.ejercicio_id = entrenamientos.ejercicio5`;
         const results = await query(set);
         let message = "";
+
         if (results === undefined || results.length === 0) {
-            message = "entrenamientos table is empty";
+            message = "User is not found";
         } else {
-            message = "Successfully retrieved all entrenamientos";
+            message = "Sucessfully retrieved user data";
         }
 
         res.send({
@@ -157,10 +162,32 @@ app.get('/api/v1/entrenamientos', async (req, res) => {
             data: results,
             message: message
         })
+
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
+
+
+    // try {
+    //     const set = `SELECT * FROM entrenamientos`;
+    //     const results = await query(set);
+    //     let message = "";
+    //     if (results === undefined || results.length === 0) {
+    //         message = "entrenamientos table is empty";
+    //     } else {
+    //         message = "Successfully retrieved all entrenamientos";
+    //     }
+
+    //     res.send({
+    //         error: false,
+    //         data: results,
+    //         message: message
+    //     })
+    // } catch (error) {
+    //     console.log(error);
+    //     res.sendStatus(500);
+    // }
 })
 
 module.exports = {

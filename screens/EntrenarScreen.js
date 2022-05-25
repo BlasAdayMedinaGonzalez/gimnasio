@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import {
   View,
   Text,
@@ -15,6 +15,18 @@ const EntrenarScreen = ({ entrenamientos }) => {
   const [entrenamientoModal, setEntrenamientoModal] = useState([]);
   const [count, setCount] = useState(0);
 
+  const [entrenamientosList, setEntrenamientosList] = useState();
+
+  useEffect(() => {
+    // console.log('====================================');
+    // console.log(entrenamientos.data);
+    // console.log('====================================');
+    // setEntrenamientosList(entrenamientos.data);
+    // console.log('====================================');
+    // console.log(entrenamientosList);
+    // console.log('====================================');
+  }, []);
+
   return (
     <View style={{ margin: "5%" }}>
       <Text style={styles.title}>Mis entrenamientos</Text>
@@ -22,6 +34,7 @@ const EntrenarScreen = ({ entrenamientos }) => {
       <FlatList
         data={entrenamientos.data}
         renderItem={(itemData) => {
+          const index = itemData.index;
           return (
             <View itemData={itemData.item} style={styles.sectionCase}>
               <View style={styles.sectionItems}>
@@ -30,19 +43,16 @@ const EntrenarScreen = ({ entrenamientos }) => {
                   setCount={setCount}
                   modalVisible={modalVisible}
                   setModalVisible={setModalVisible}
-                  entrenamientoModal={entrenamientoModal}
+                  entrenamientoModal={itemData.item} // HERE
                   setEntrenamientoModal={setEntrenamientoModal}
+                  itemData={itemData.index}
                 />
                 <Text style={styles.sectionText}>{itemData.item.nombre}</Text>
                 <TouchableHighlight
                   style={{ marginLeft: "70%" }}
                   onPress={() => {
-                    {
-                      setCount(0);
-                      setModalVisible(true);
-                      setEntrenamientoModal(itemData.item);
-                      console.log(itemData.item);
-                    }
+                    setModalVisible(true);
+                    setEntrenamientoModal(itemData.item);
                   }}
                 >
                   <Icon2 style={styles.sectionIcon} name="running" size={25} />
@@ -52,13 +62,13 @@ const EntrenarScreen = ({ entrenamientos }) => {
               <Text style={styles.sectionText}>Ejercicios</Text>
               <Text>
                 {"\u00A0"}
-                {itemData.item.entrenamiento1}
+                {itemData.item.ejercicio1}
                 {"\n"}
                 {"\u00A0"}
-                {itemData.item.entrenamiento2}
+                {itemData.item.ejercicio2}
                 {"\n"}
                 {"\u00A0"}
-                {itemData.item.entrenamiento3}
+                {itemData.item.ejercicio3}
                 {"\n"}
               </Text>
             </View>
@@ -88,6 +98,7 @@ const styles = StyleSheet.create({
   },
   sectionText: {
     fontWeight: "bold",
+    fontSize:16
   },
   sectionIcon: {
     color: "deepskyblue",

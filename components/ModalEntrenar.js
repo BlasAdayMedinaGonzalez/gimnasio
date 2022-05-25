@@ -3,65 +3,54 @@ import { View, Text, StyleSheet, Pressable, Modal, TouchableHighlight, FlatList 
 
 
 
-const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, setEntrenamientoModal, count, setCount}) => {
+const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, itemData, setEntrenamientoModal, countt, setCountt }) => {
   const [descripciones, setDescripciones] = useState("");
-  const {entrenamiento1, entrenamiento2, entrenamiento3} = entrenamientoModal;
-  const entrenamientos = [entrenamiento1, entrenamiento2, entrenamiento3];
-  const [titulos, setTitulos] = useState("");
-  const [textoButton, setTextoButton] = useState("Iniciar entrenamiento")
+  const { ejercicio1, ejercicio2, ejercicio3 } = entrenamientoModal;
+  const ejercicios = [ejercicio1, ejercicio2, ejercicio3];
+  const [titulos, setTitulos] = useState('ENTRENAMIENTO');
+  const [textoButton, setTextoButton] = useState("Iniciar entrenamiento");
+  const [count, setCount] = useState(0);
+  
 
   const next = () => {
-    setCount(0);
-    setTitulos(entrenamientos[count]);
-    if (count < entrenamientos.length) {
+    
+    setTitulos(ejercicios[count]);
+    if (count < ejercicios.length) {
       setTextoButton("Siguiente ejercicio");
-      setCount(count+1)
-    } 
-    if (count >= entrenamientos.length) {
-      console.log(entrenamientos[count]);
+      setCount(count + 1)
+    }
+    if (count == (ejercicios.length - 1)) {
       setTextoButton("Finalizar entrenamiento");
+    }
+    if (count >= ejercicios.length) {
+      setTextoButton("Iniciar entrenamiento");
       setModalVisible(!modalVisible);
+      setCount(0)
+      setTitulos('ENTRENAMIENTO')
       // consulta post
     }
-    if (count > entrenamientos.length) {
-      console.log(entrenamientos[count]);
-      setTextoButton("Finalizar entrenamiento");
-      setModalVisible(!modalVisible);
-      // consulta post
-    }
-    
-    console.log('====================================');
-    console.log(entrenamientos.length-1);
-    console.log('====================================');
-    // if (count == entrenamientos.length) {
-      
-    // }
-    console.log(count);
-    
   }
-  
+
   return (
-    <View>
-    <Modal
+    <View style={styles.centeredView}>
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setTitulos(entrenamientoModal.entrenamiento1)
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.modalView}>
           <Pressable
             style={styles.buttonClose}
-            onPress={() => {setTitulos(entrenamientoModal.entrenamiento1); setModalVisible(!modalVisible)}}
+            onPress={() => { setTitulos(ejercicio1); setModalVisible(!modalVisible) }}
           >
             <Text style={styles.textStyleClose}>X</Text>
           </Pressable>
           <Text style={styles.modalText}>{titulos}</Text>
-          {/* <Text style={styles.textDescription}>Inicio</Text> */}
           <Text style={styles.text}>
-          {descripciones}
+            {descripciones}
           </Text>
           <TouchableHighlight
             style={styles.buttonNext}
@@ -72,15 +61,22 @@ const ModalEntrenar = ({ modalVisible, setModalVisible, entrenamientoModal, setE
         </View>
       </Modal>
       <FlatList data={entrenamientoModal} renderItem={(itemData) => {
-        
+
       }} />
 
-      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
   modalView: {
+
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
@@ -88,7 +84,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    height: 800,
+    height: '80%',
   },
   button: {
     borderRadius: 20,
